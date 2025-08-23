@@ -59,3 +59,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+from pages import login_page
+from pages import signup_page
+from pages import chat_page
+PAGES = {
+    "Login": login_page.login_page,
+    "Sign Up": signup_page.signup_page,
+    "Chat Page": chat_page.chat_page,
+}
+
+st.sidebar.title("📍 Navigation")
+selection = st.sidebar.radio("Go to", list(PAGES.keys()))
+page = PAGES[selection]
+page()
