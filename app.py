@@ -2,7 +2,7 @@ import streamlit as st
 from backend.auth import signup_user,login_user
 from backend.db import init_db
 from backend.utils import show_sidebar
-from ..pages import chat_page,admin_page
+from pages import chat_page,admin_page
 from backend.db import init_db
 
 
