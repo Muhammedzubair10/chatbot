@@ -113,3 +113,45 @@ def main():
 if __name__ == '__main__':
     init_db()
     main()
+import streamlit as st
+from backend.auth import signup_user, login_user
+
+# Initialize session state
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+if "user_email" not in st.session_state:
+    st.session_state.user_email = None
+
+st.title("🔐 Authentication Page")
+
+tab1, tab2 = st.tabs(["Login", "Signup"])
+
+# --- LOGIN TAB ---
+with tab1:
+    st.subheader("Login to your account")
+
+    login_email = st.text_input("Email", key="login_email")
+    login_password = st.text_input("Password", type="password", key="login_password")
+
+    if st.button("Login"):
+        if login_user(login_email, login_password):
+            st.session_state.logged_in = True
+            st.session_state.user_email = login_email
+            st.success("✅ Logged in successfully!")
+            
+        else:
+            st.error("❌ Invalid email or password")
+
+# --- SIGNUP TAB ---
+with tab2:
+    st.subheader("Create a new account")
+
+    signup_username = st.text_input("Username", key="signup_username")
+    signup_email = st.text_input("Email", key="signup_email")
+    signup_password = st.text_input("Password", type="password", key="signup_password")
+
+    if st.button("Signup"):
+        if signup_user(signup_username, signup_email, signup_password):
+            st.success("🎉 Account created successfully! Please login now.")
+        else:
+            st.error("⚠️ Email already exists. Try logging in.")
