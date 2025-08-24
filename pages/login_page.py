@@ -3,6 +3,7 @@ from backend.auth import login_user
 
 def login_page():
     st.title("🔑 Login")
+
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
 
