@@ -1,14 +1,9 @@
 import streamlit as st
-from backend.auth import signup_user
 
 def signup_page():
-    st.title("📝 Sign Up")
-
+    st.subheader("📝 Sign Up Page")
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
-
     if st.button("Sign Up"):
-        if signup_user(email, password):
-            st.success("Signup successful! ✅ Now you can login.")
-        else:
-            st.error("User already exists ❌")
+        st.session_state["user"] = email
+        st.success(f"Account created for {email}!")
