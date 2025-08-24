@@ -81,3 +81,9 @@ elif choice == "Login":
             st.success(f"✅ Welcome {user[1]}!")
         else:
             st.error("❌ Invalid email or password")
+import streamlit as st
+
+# After successful login
+st.session_state["logged_in"] = True
+st.session_state["user"] = email  # optional, store user email/name
+st.success(f"Welcome {email}!")
