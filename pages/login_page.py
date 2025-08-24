@@ -27,3 +27,9 @@ def login_page():
                         st.error("❌ Invalid email or password.")
                 except Exception as e:
                     st.error(f"❌ Error: {e}")
+import streamlit as st
+
+# After successful login
+st.session_state["logged_in"] = True
+st.session_state["user"] = email  # optional, store user email/name
+st.success(f"Welcome {email}!")
