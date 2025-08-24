@@ -1,57 +1,23 @@
 import streamlit as st
-from backend.storage import get_all_users, get_all_chats
 
-def admin_ui():
-    # ✅ Check if logged in
-    if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-        st.warning("⚠️ You must log in as Admin first.")
-        st.stop()
-
-    # ✅ Check if user is admin
-    if "role" not in st.session_state or st.session_state["role"] != "admin":
-        st.error("🚫 You are not authorized to view this page.")
-        st.stop()
-
+def admin_page():
     st.title("📊 Admin Dashboard")
 
-    # Registered users
-    st.subheader("Registered Users")
-    try:
-        users = get_all_users()
-        if users:
-            # 🔍 Search users by email
-            search_user = st.text_input("Search user by email")
-            if search_user:
-                users = [u for u in users if search_user.lower() in u['email'].lower()]
+    # Check if user is logged in
+    if "user" not in st.session_state:
+        st.warning("⚠️ You need to login first to access the Admin page.")
+        return
 
-            st.dataframe(users)
-        else:
-            st.info("No users found.")
-    except Exception as e:
-        st.error(f"Error loading users: {e}")
+    # Restrict access to only admin
+    if st.session_state["user"] != "admin@example.com":
+        st.error("🚫 Access Denied! Only admin can view this page.")
+        return
 
-    # Chats
-    st.subheader("All Chats")
-    try:
-        chats = get_all_chats()
-        if chats:
-            # 🔍 Search chats by user email
-            search_chat = st.text_input("Search chats by email")
-            if search_chat:
-                chats = [c for c in chats if search_chat.lower() in c['email'].lower()]
+    # Admin content
+    st.success("✅ Welcome Admin! You have full access.")
 
-            st.dataframe(chats)
-        else:
-            st.info("No chats found.")
-    except Exception as e:
-        st.error(f"Error loading chats: {e}")
-
-
-# ✅ Call admin UI
-admin_ui()
-import streamlit as st  
-
-if "logged_in" not in st.session_state or not st.session_state["logged_in"]:  
-    st.error("You need to login first to access this page.")  
-    st.stop()
-
+    st.subheader("📌 Admin Tools")
+    st.write("- View registered users")
+    st.write("- Monitor chatbot logs")
+    st.write("- Manage database entries")
+    st.write("- Update API settings")
