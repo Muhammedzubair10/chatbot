@@ -26,3 +26,8 @@ for role, message in st.session_state["chat_history"]:
         st.markdown(f"**🧑 {role}:** {message}")
     else:
         st.markdown(f"**🤖 {role}:** {message}")
+import streamlit as st  
+
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:  
+    st.error("You need to login first to access this page.")  
+    st.stop()
